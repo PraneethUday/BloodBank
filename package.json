@@ -1,0 +1,23 @@
+{
+  "name": "bloodbank",
+  "version": "1.0.0",
+  "description": "BloodBank ",
+  "homepage": "https://github.com/PraneethUday/BloodBank#readme",
+  "bugs": {
+    "url": "https://github.com/PraneethUday/BloodBank/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PraneethUday/BloodBank.git"
+  },
+  "license": "ISC",
+  "author": "PraneethUday",
+  "type": "commonjs",
+  "main": "DbTest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mongoose": "^8.19.4"
+  }
+}

@@ -1,23 +1,23 @@
 {
   "name": "bloodbank",
   "version": "1.0.0",
-  "description": "BloodBank ",
-  "homepage": "https://github.com/PraneethUday/BloodBank#readme",
-  "bugs": {
-    "url": "https://github.com/PraneethUday/BloodBank/issues"
+  "description": "- server → Express backend - client → React frontend - public → shared images/uploads",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PraneethUday/BloodBank.git"
   },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "author": "PraneethUday",
   "type": "commonjs",
-  "main": "DbTest.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bugs": {
+    "url": "https://github.com/PraneethUday/BloodBank/issues"
   },
-  "dependencies": {
-    "mongoose": "^8.19.4"
-  }
+  "homepage": "https://github.com/PraneethUday/BloodBank#readme"
 }

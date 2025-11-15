@@ -1,30 +1,52 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ onLogout }) {
   const [pendingDonations, setPendingDonations] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [bloodCenters, setBloodCenters] = useState([]);
+  const [activityLogs, setActivityLogs] = useState([]);
   const [activeTab, setActiveTab] = useState("donations");
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
+  const [filteredDonations, setFilteredDonations] = useState([]);
+  const [filteredRequests, setFilteredRequests] = useState([]);
+  const [filteredLogs, setFilteredLogs] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    filterDonations();
+  }, [pendingDonations, searchTerm, dateFilter]);
+
+  useEffect(() => {
+    filterRequests();
+  }, [pendingRequests, searchTerm, dateFilter]);
+
+  useEffect(() => {
+    filterLogs();
+  }, [activityLogs, searchTerm, dateFilter]);
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const [donationsRes, requestsRes, centersRes] = await Promise.all([
-        axios.get("http://localhost:4000/donation", {
-          headers: { Authorization: `Bearer admin-token` },
-        }),
-        axios.get("http://localhost:4000/blood-requests", {
-          headers: { Authorization: `Bearer admin-token` },
-        }),
-        axios.get("http://localhost:4000/blood-centers"),
-      ]);
+      const [donationsRes, requestsRes, centersRes, logsRes] =
+        await Promise.all([
+          axios.get("http://localhost:4000/donation", {
+            headers: { Authorization: `Bearer admin-token` },
+          }),
+          axios.get("http://localhost:4000/blood-requests", {
+            headers: { Authorization: `Bearer admin-token` },
+          }),
+          axios.get("http://localhost:4000/blood-centers"),
+          axios.get("http://localhost:4000/activity-logs", {
+            headers: { Authorization: `Bearer admin-token` },
+          }),
+        ]);
 
       setPendingDonations(
         donationsRes.data.donations.filter(
@@ -36,6 +58,7 @@ export default function AdminDashboard() {
           []
       );
       setBloodCenters(centersRes.data.centers || []);
+      setActivityLogs(logsRes.data.logs || []);
     } catch (error) {
       console.error("Error fetching data:", error);
       setMessage("Error loading data");
@@ -128,6 +151,94 @@ export default function AdminDashboard() {
     }
   };
 
+  const filterDonations = () => {
+    let filtered = pendingDonations;
+
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (donation) =>
+          donation.donorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          donation.bloodType.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (dateFilter) {
+      filtered = filtered.filter((donation) => {
+        const donationDate = new Date(donation.createdAt || donation.date)
+          .toISOString()
+          .split("T")[0];
+        return donationDate === dateFilter;
+      });
+    }
+
+    // Sort by latest first
+    filtered.sort(
+      (a, b) =>
+        new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date)
+    );
+
+    setFilteredDonations(filtered);
+  };
+
+  const filterRequests = () => {
+    let filtered = pendingRequests;
+
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (request) =>
+          request.patientInfo?.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          request.requesterName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          request.bloodType.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (dateFilter) {
+      filtered = filtered.filter((request) => {
+        const requestDate = new Date(request.createdAt || request.date)
+          .toISOString()
+          .split("T")[0];
+        return requestDate === dateFilter;
+      });
+    }
+
+    // Sort by latest first
+    filtered.sort(
+      (a, b) =>
+        new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date)
+    );
+
+    setFilteredRequests(filtered);
+  };
+
+  const filterLogs = () => {
+    let filtered = activityLogs;
+
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (log) =>
+          log.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          log.userType.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (dateFilter) {
+      filtered = filtered.filter((log) => {
+        const logDate = new Date(log.timestamp).toISOString().split("T")[0];
+        return logDate === dateFilter;
+      });
+    }
+
+    // Sort by latest first
+    filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    setFilteredLogs(filtered);
+  };
+
   if (isLoading) {
     return (
       <main className="admin-dashboard-root">
@@ -137,13 +248,16 @@ export default function AdminDashboard() {
   }
 
   return (
-    <main className="admin-dashboard-root fade-up">
+    <main className="admin-dashboard-root fade-in-dark bounce-in-dark">
       <div className="dashboard-container">
         <div className="dashboard-header">
-          <h1>Admin Dashboard</h1>
+          <h1>Blood Bank Management Dashboard</h1>
           <button
             className="exit-btn"
-            onClick={() => (window.location.href = "/")}
+            onClick={() => {
+              onLogout();
+              window.location.href = "/";
+            }}
           >
             Exit
           </button>
@@ -181,16 +295,57 @@ export default function AdminDashboard() {
           >
             Blood Stock Overview
           </button>
+          <button
+            className={`tab-btn ${activeTab === "logs" ? "active" : ""}`}
+            onClick={() => setActiveTab("logs")}
+          >
+            Activity Logs ({activityLogs.length})
+          </button>
         </div>
 
+        {(activeTab === "donations" ||
+          activeTab === "requests" ||
+          activeTab === "logs") && (
+          <div className="filters-section slide-in-dark">
+            <div className="filter-group">
+              <input
+                type="text"
+                placeholder={
+                  activeTab === "logs"
+                    ? "Search by action, details, or user type..."
+                    : "Search by name or blood type..."
+                }
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+              <input
+                type="date"
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+                className="date-input"
+              />
+              <button
+                className="clear-filters-btn shake-dark"
+                onClick={() => {
+                  setSearchTerm("");
+                  setDateFilter("");
+                }}
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        )}
+
         {activeTab === "donations" && (
-          <div className="donations-section">
+          <div className="donations-section slide-in-dark">
             <h2>Pending Donation Requests</h2>
-            {pendingDonations.length === 0 ? (
+            {filteredDonations.length === 0 ? (
               <p>No pending donations</p>
             ) : (
               <div className="donations-list">
-                {pendingDonations.map((donation) => (
+                {filteredDonations.map((donation) => (
                   <div key={donation._id} className="donation-item">
                     <div className="donation-header">
                       <h3>{donation.donorName}</h3>
@@ -240,13 +395,13 @@ export default function AdminDashboard() {
         )}
 
         {activeTab === "requests" && (
-          <div className="requests-section">
+          <div className="requests-section slide-in-dark">
             <h2>Pending Blood Requests</h2>
-            {pendingRequests.length === 0 ? (
+            {filteredRequests.length === 0 ? (
               <p>No pending requests</p>
             ) : (
               <div className="requests-list">
-                {pendingRequests.map((request) => (
+                {filteredRequests.map((request) => (
                   <div key={request._id} className="request-item">
                     <div className="request-header">
                       <h3>{request.patientInfo?.name || "Patient"}</h3>
@@ -292,7 +447,7 @@ export default function AdminDashboard() {
         )}
 
         {activeTab === "stocks" && (
-          <div className="stocks-section">
+          <div className="stocks-section slide-in-dark">
             <h2>Blood Stock Management</h2>
             <div className="centers-grid">
               {bloodCenters.map((center) => (
@@ -332,6 +487,38 @@ export default function AdminDashboard() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {activeTab === "logs" && (
+          <div className="logs-section slide-in-dark">
+            <h2>Activity Logs</h2>
+            {filteredLogs.length === 0 ? (
+              <p>No activity logs found</p>
+            ) : (
+              <div className="logs-list">
+                {filteredLogs.map((log) => (
+                  <div key={log._id} className="log-item">
+                    <div className="log-header">
+                      <span className="log-action">{log.action}</span>
+                      <span className="log-user-type">{log.userType}</span>
+                      <span className="log-timestamp">
+                        {new Date(log.timestamp).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="log-details">
+                      <p>{log.details}</p>
+                      {log.ipAddress && (
+                        <p className="log-meta">
+                          <strong>IP:</strong> {log.ipAddress} |{" "}
+                          <strong>User Agent:</strong> {log.userAgent}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -12,11 +12,7 @@ export default function NavBar({ user, onLogout }) {
   return (
     <nav className="navbar slide-in">
       <div className="navbar-container">
-        <Link
-          to="/"
-          className="navbar-logo"
-          style={{ textDecoration: "none", color: "#d32f2f" }}
-        >
+        <Link to="/" className="navbar-logo" style={{ textDecoration: "none" }}>
           <img
             src="/images/logo.webp"
             alt="BloodBank Logo"

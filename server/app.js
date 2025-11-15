@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 const donationRoutes = require("./routes/donation");
 const bloodCentersRoutes = require("./routes/bloodCenters");
 const bloodRequestsRoutes = require("./routes/bloodRequests");
+const activityLogRoutes = require("./routes/activityLogs");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -16,7 +17,14 @@ const PORT = process.env.PORT || 4000;
 // Connect to MongoDB
 mongoose
   .connect(
-    "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank?retryWrites=true&w=majority"
+    "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank?retryWrites=true&w=majority",
+    {
+      ssl: true,
+      tlsAllowInvalidCertificates: true,
+      tlsAllowInvalidHostnames: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    }
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
@@ -31,6 +39,7 @@ app.use("/auth", authRoutes);
 app.use("/donation", donationRoutes);
 app.use("/blood-centers", bloodCentersRoutes);
 app.use("/blood-requests", bloodRequestsRoutes);
+app.use("/activity-logs", activityLogRoutes);
 
 // Admin routes (no auth for demo)
 app.use("/admin/donations", donationRoutes);

@@ -18,12 +18,53 @@ export default function About() {
 
       <section className="mission-section">
         <h2>Our Mission</h2>
-        <p>
-          At BloodBank, we are committed to ensuring a safe and adequate blood
-          supply for patients in need. Our mission is to connect donors with
-          recipients, promote blood donation awareness, and maintain the highest
-          standards of safety and quality in blood collection and distribution.
-        </p>
+        <div className="mission-statements">
+          <div className="mission-statement">
+            <p>
+              "Our mission is to design and develop an innovative blood bank
+              management system that enhances donor engagement, improves request
+              handling, and supports healthcare providers with accurate,
+              real-time information."
+            </p>
+          </div>
+          <div className="mission-statement">
+            <p>
+              "Our mission is to ensure safe, timely, and easy access to blood
+              for every individual in need by building a trusted digital
+              platform that connects donors, hospitals, and patients."
+            </p>
+          </div>
+          <div className="mission-statement">
+            <p>
+              "Our mission is to leverage modern technology to develop a
+              real-time blood management system that simplifies donor
+              registration, improves request processing, and ensures that
+              lifesaving blood reaches people without delay."
+            </p>
+          </div>
+          <div className="mission-statement">
+            <p>
+              "Our mission is to promote voluntary blood donation and create a
+              community-driven platform where every donor's contribution can
+              help save lives and make healthcare more accessible."
+            </p>
+          </div>
+          <div className="mission-statement">
+            <p>
+              "Our mission is to design an efficient blood bank management
+              system that enhances transparency, improves communication between
+              donors and hospitals, and ensures accurate and reliable data
+              handling."
+            </p>
+          </div>
+          <div className="mission-statement">
+            <p>
+              "Our mission is to build a user-friendly digital blood bank that
+              allows donors and recipients to connect instantly and ensures that
+              no life is lost due to shortage of blood."
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="stats-section">

@@ -119,30 +119,30 @@
   animation: bounceIn 1s ease forwards;
 }
 
-/* New cool animations with red theme */
+/* New cool animations with new theme */
 
-/* Pulse red */
-@keyframes pulseRed {
+/* Pulse new theme */
+@keyframes pulseNew {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+    box-shadow: 0 0 0 0 rgba(170, 80, 66, 0.7);
   }
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(211, 47, 47, 0);
+    box-shadow: 0 0 0 10px rgba(170, 80, 66, 0);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+    box-shadow: 0 0 0 0 rgba(170, 80, 66, 0);
   }
 }
 
-.pulse-red {
-  animation: pulseRed 2s infinite;
+.pulse-new {
+  animation: pulseNew 2s infinite;
 }
 
-/* Shake red */
-@keyframes shakeRed {
+/* Shake new theme */
+@keyframes shakeNew {
   0%,
   100% {
     transform: translateX(0);
@@ -162,12 +162,12 @@
   }
 }
 
-.shake-red {
-  animation: shakeRed 0.5s ease-in-out;
+.shake-new {
+  animation: shakeNew 0.5s ease-in-out;
 }
 
-/* Flip in red */
-@keyframes flipInRed {
+/* Flip in new theme */
+@keyframes flipInNew {
   0% {
     transform: rotateY(-90deg);
     opacity: 0;
@@ -178,14 +178,14 @@
   }
 }
 
-.flip-in-red {
-  animation: flipInRed 0.8s ease-out;
+.flip-in-new {
+  animation: flipInNew 0.8s ease-out;
 }
 
 /* Additional cool animations */
 
-/* Rotate in red */
-@keyframes rotateInRed {
+/* Rotate in new theme */
+@keyframes rotateInNew {
   0% {
     transform: rotate(-180deg) scale(0);
     opacity: 0;
@@ -196,12 +196,12 @@
   }
 }
 
-.rotate-in-red {
-  animation: rotateInRed 1s ease-out;
+.rotate-in-new {
+  animation: rotateInNew 1s ease-out;
 }
 
-/* Zoom in red */
-@keyframes zoomInRed {
+/* Zoom in new theme */
+@keyframes zoomInNew {
   0% {
     transform: scale(0);
     opacity: 0;
@@ -216,12 +216,12 @@
   }
 }
 
-.zoom-in-red {
-  animation: zoomInRed 0.8s ease-out;
+.zoom-in-new {
+  animation: zoomInNew 0.8s ease-out;
 }
 
-/* Slide up red */
-@keyframes slideUpRed {
+/* Slide up new theme */
+@keyframes slideUpNew {
   0% {
     transform: translateY(100px);
     opacity: 0;
@@ -232,12 +232,12 @@
   }
 }
 
-.slide-up-red {
-  animation: slideUpRed 0.7s ease-out;
+.slide-up-new {
+  animation: slideUpNew 0.7s ease-out;
 }
 
-/* Wobble red */
-@keyframes wobbleRed {
+/* Wobble new theme */
+@keyframes wobbleNew {
   0% {
     transform: translateX(0%);
   }
@@ -261,12 +261,12 @@
   }
 }
 
-.wobble-red {
-  animation: wobbleRed 1s ease-in-out;
+.wobble-new {
+  animation: wobbleNew 1s ease-in-out;
 }
 
-/* Heartbeat red */
-@keyframes heartbeatRed {
+/* Heartbeat red - disabled */
+/* @keyframes heartbeatRed {
   0% {
     transform: scale(1);
   }
@@ -286,4 +286,158 @@
 
 .heartbeat-red {
   animation: heartbeatRed 1.3s ease-in-out infinite;
+} */
+
+/* Heartbeat glow - disabled */
+/* @keyframes heartbeatGlow {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 5px rgba(255, 82, 82, 0.5);
+    filter: drop-shadow(0 0 5px rgba(255, 82, 82, 0.5));
+  }
+  14% {
+    transform: scale(1.3);
+    text-shadow: 0 0 20px rgba(255, 82, 82, 0.8),
+      0 0 30px rgba(255, 82, 82, 0.6);
+    filter: drop-shadow(0 0 20px rgba(255, 82, 82, 0.8));
+  }
+  28% {
+    transform: scale(1);
+    text-shadow: 0 0 5px rgba(255, 82, 82, 0.5);
+    filter: drop-shadow(0 0 5px rgba(255, 82, 82, 0.5));
+  }
+  42% {
+    transform: scale(1.3);
+    text-shadow: 0 0 20px rgba(255, 82, 82, 0.8),
+      0 0 30px rgba(255, 82, 82, 0.6);
+    filter: drop-shadow(0 0 20px rgba(255, 82, 82, 0.8));
+  }
+  70% {
+    transform: scale(1);
+    text-shadow: 0 0 5px rgba(255, 82, 82, 0.5);
+    filter: drop-shadow(0 0 5px rgba(255, 82, 82, 0.5));
+  }
+}
+
+.heartbeat-glow {
+  animation: heartbeatGlow 2.5s ease-in-out infinite;
+} */
+
+/* Dark theme animations for admin dashboard */
+
+/* Fade in dark */
+@keyframes fadeInDark {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-dark {
+  animation: fadeInDark 0.6s ease forwards;
+}
+
+/* Slide in dark */
+@keyframes slideInDark {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-dark {
+  animation: slideInDark 0.8s ease forwards;
+}
+
+/* Bounce in dark */
+@keyframes bounceInDark {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bounce-in-dark {
+  animation: bounceInDark 1s ease forwards;
+}
+
+/* Glow dark red */
+@keyframes glowDarkRed {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.8), 0 0 30px rgba(255, 68, 68, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+  }
+}
+
+.glow-dark-red {
+  animation: glowDarkRed 2s infinite;
+}
+
+/* Pulse dark */
+@keyframes pulseDark {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+  }
+}
+
+.pulse-dark {
+  animation: pulseDark 2s infinite;
+}
+
+/* Shake dark */
+@keyframes shakeDark {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+.shake-dark {
+  animation: shakeDark 0.5s ease-in-out;
 }

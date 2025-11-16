@@ -15,6 +15,13 @@ export default function AdminDashboard({ onLogout }) {
   const [filteredDonations, setFilteredDonations] = useState([]);
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [filteredLogs, setFilteredLogs] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [originalStock, setOriginalStock] = useState({});
+  const [changes, setChanges] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -130,6 +137,102 @@ export default function AdminDashboard({ onLogout }) {
     } catch (error) {
       setMessage("Error rejecting request");
     }
+  };
+
+  const handleEditClick = () => {
+    setShowPasswordModal(true);
+  };
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (password === "admin") {
+      setShowPasswordModal(false);
+      setPassword("");
+      setPasswordError("");
+      setEditMode(true);
+      // Store original stock values
+      const original = {};
+      bloodCenters.forEach((center) => {
+        original[center._id] = { ...center.bloodStock };
+      });
+      setOriginalStock(original);
+      setChanges({});
+    } else {
+      setPasswordError("Invalid password");
+    }
+  };
+
+  const handleStockChange = (centerId, bloodType, newValue) => {
+    const newUnits = parseInt(newValue) || 0;
+    const originalValue = originalStock[centerId]?.[bloodType] || 0;
+
+    setBloodCenters((prevCenters) =>
+      prevCenters.map((center) =>
+        center._id === centerId
+          ? {
+              ...center,
+              bloodStock: {
+                ...center.bloodStock,
+                [bloodType]: newUnits,
+              },
+            }
+          : center
+      )
+    );
+
+    // Track changes
+    setChanges((prevChanges) => ({
+      ...prevChanges,
+      [`${centerId}-${bloodType}`]: {
+        centerId,
+        bloodType,
+        oldValue: originalValue,
+        newValue: newUnits,
+      },
+    }));
+  };
+
+  const handleSaveClick = () => {
+    if (Object.keys(changes).length === 0) {
+      setMessage("No changes to save");
+      return;
+    }
+    setShowSummaryModal(true);
+  };
+
+  const handleConfirmSave = async () => {
+    try {
+      const updatePromises = Object.values(changes).map((change) =>
+        axios.put(
+          `${API_BASE_URL}/blood-centers/${change.centerId}/stock`,
+          { bloodType: change.bloodType, units: change.newValue },
+          { headers: { Authorization: `Bearer admin-token` } }
+        )
+      );
+
+      await Promise.all(updatePromises);
+      setMessage("Blood stock updated successfully!");
+      setShowSummaryModal(false);
+      setEditMode(false);
+      setChanges({});
+      setOriginalStock({});
+      fetchData(); // Refresh data
+    } catch (error) {
+      setMessage("Error updating blood stock");
+    }
+  };
+
+  const handleCancelEdit = () => {
+    // Restore original values
+    setBloodCenters((prevCenters) =>
+      prevCenters.map((center) => ({
+        ...center,
+        bloodStock: originalStock[center._id] || center.bloodStock,
+      }))
+    );
+    setEditMode(false);
+    setChanges({});
+    setOriginalStock({});
   };
 
   const handleStockUpdate = async (centerId, bloodType, newUnits) => {
@@ -456,7 +559,44 @@ export default function AdminDashboard({ onLogout }) {
 
         {activeTab === "stocks" && (
           <div className="stocks-section slide-in-dark">
-            <h2>Blood Stock Management</h2>
+            <div className="stock-header">
+              <h2>Blood Stock Management</h2>
+              {!editMode && (
+                <button
+                  className="btn-primary edit-btn"
+                  onClick={handleEditClick}
+                >
+                  Edit Blood Stock
+                </button>
+              )}
+              {editMode && (
+                <div className="edit-actions">
+                  <button
+                    className="btn-primary save-btn"
+                    onClick={handleSaveClick}
+                  >
+                    Save Changes
+                  </button>
+                  <button
+                    className="btn-secondary cancel-btn"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {message && (
+              <div
+                className={`message ${
+                  message.includes("success") ? "success" : "error"
+                }`}
+              >
+                {message}
+              </div>
+            )}
+
             <div className="centers-grid">
               {bloodCenters.map((center) => (
                 <div key={center._id} className="center-card">
@@ -473,20 +613,23 @@ export default function AdminDashboard({ onLogout }) {
                         >
                           <div className="blood-type">{type}</div>
                           <div className="units">
-                            <input
-                              type="number"
-                              min="0"
-                              value={units}
-                              onChange={(e) =>
-                                handleStockUpdate(
-                                  center._id,
-                                  type,
-                                  parseInt(e.target.value) || 0
-                                )
-                              }
-                              className="stock-input"
-                            />{" "}
-                            units
+                            {editMode ? (
+                              <input
+                                type="number"
+                                min="0"
+                                value={units}
+                                onChange={(e) =>
+                                  handleStockChange(
+                                    center._id,
+                                    type,
+                                    e.target.value
+                                  )
+                                }
+                                className="stock-input"
+                              />
+                            ) : (
+                              <span>{units} units</span>
+                            )}
                           </div>
                         </div>
                       )
@@ -504,29 +647,114 @@ export default function AdminDashboard({ onLogout }) {
             {filteredLogs.length === 0 ? (
               <p>No activity logs found</p>
             ) : (
-              <div className="logs-list">
-                {filteredLogs.map((log) => (
-                  <div key={log._id} className="log-item">
-                    <div className="log-header">
-                      <span className="log-action">{log.action}</span>
-                      <span className="log-user-type">{log.userType}</span>
-                      <span className="log-timestamp">
-                        {new Date(log.timestamp).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="log-details">
-                      <p>{log.details}</p>
-                      {log.ipAddress && (
-                        <p className="log-meta">
-                          <strong>IP:</strong> {log.ipAddress} |{" "}
-                          <strong>User Agent:</strong> {log.userAgent}
-                        </p>
-                      )}
-                    </div>
+              <div className="terminal-window">
+                <div className="terminal-header">
+                  <span className="terminal-title">Activity Monitor</span>
+                  <div className="terminal-controls">
+                    <span className="terminal-btn red"></span>
+                    <span className="terminal-btn yellow"></span>
+                    <span className="terminal-btn green"></span>
                   </div>
-                ))}
+                </div>
+                <div className="terminal-body">
+                  {filteredLogs.map((log) => {
+                    const timestamp = new Date(log.timestamp).toLocaleString();
+                    const colorClass =
+                      log.userType === "user"
+                        ? "user-activity"
+                        : log.userType === "admin"
+                        ? "admin-activity"
+                        : "system-activity";
+                    return (
+                      <div
+                        key={log._id}
+                        className={`terminal-line ${colorClass}`}
+                      >
+                        <span className="terminal-timestamp">
+                          [{timestamp}]
+                        </span>
+                        <span className="terminal-action">{log.action}:</span>
+                        <span className="terminal-details">{log.details}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Password Modal */}
+        {showPasswordModal && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Admin Authentication</h2>
+              <p>Enter admin password to edit blood stock:</p>
+              <form onSubmit={handlePasswordSubmit}>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  required
+                />
+                {passwordError && <div className="error">{passwordError}</div>}
+                <div className="modal-actions">
+                  <button type="submit" className="btn-primary">
+                    Authenticate
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => {
+                      setShowPasswordModal(false);
+                      setPassword("");
+                      setPasswordError("");
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Summary Modal */}
+        {showSummaryModal && (
+          <div className="modal-overlay">
+            <div className="modal-content summary-modal">
+              <h2>Confirm Changes</h2>
+              <p>Review the changes before saving:</p>
+              <div className="changes-summary">
+                {Object.values(changes).map((change, index) => {
+                  const center = bloodCenters.find(
+                    (c) => c._id === change.centerId
+                  );
+                  return (
+                    <div key={index} className="change-item">
+                      <strong>
+                        {center?.name} - {change.bloodType}:
+                      </strong>
+                      <span>
+                        {change.oldValue} → {change.newValue} units
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="modal-actions">
+                <button className="btn-primary" onClick={handleConfirmSave}>
+                  Save Changes
+                </button>
+                <button
+                  className="btn-secondary"
+                  onClick={() => setShowSummaryModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

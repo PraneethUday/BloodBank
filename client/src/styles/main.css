@@ -63,8 +63,8 @@ body {
 }
 
 .navbar-menu li a:hover {
-  color: #d8bd8a;
-  background-color: #aa5042;
+  background-color: #d8d78f;
+  color: #ca1a14;
 }
 
 .app-root {
@@ -620,13 +620,8 @@ body {
 }
 
 .navbar-menu li button:hover {
-  color: #ffffff;
-  background-color: #007bff;
-}
-
-.navbar-menu li a:hover {
-  color: #ffffff;
-  background-color: #007bff;
+  color: #753742;
+  background-color: #d8bd8a;
 }
 
 .user-info {
@@ -643,8 +638,9 @@ body {
 }
 
 .signup-link:hover {
-  background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  background: linear-gradient(135deg, #d8bd8a 0%, #d8bd8a 100%);
+  color: #753742;
+  box-shadow: 0 4px 15px rgba(216, 189, 138, 0.4);
 }
 
 /* Loading */

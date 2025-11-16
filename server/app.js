@@ -12,7 +12,7 @@ const bloodRequestsRoutes = require("./routes/bloodRequests");
 const activityLogRoutes = require("./routes/activityLogs");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3002;
 
 // Connect to MongoDB
 mongoose
@@ -50,4 +50,18 @@ app.get("/", (req, res) => {
   res.json({ ok: true, message: "BloodBank API working" });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
+
+// Handle port already in use error
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.error(
+      `Port ${PORT} is already in use. Please free up the port or set a different PORT environment variable.`
+    );
+    process.exit(1);
+  } else {
+    throw err;
+  }
+});

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 export default function Signup({ onSignup }) {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ export default function Signup({ onSignup }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/auth/signup",
+        `${API_BASE_URL}/auth/signup`,
         formData
       );
       const { token, user } = response.data;

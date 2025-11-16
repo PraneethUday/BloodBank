@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 export default function BloodStock() {
   const [centers, setCenters] = useState([]);
@@ -9,7 +10,7 @@ export default function BloodStock() {
   useEffect(() => {
     const fetchBloodStock = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/blood-centers");
+        const response = await axios.get(`${API_BASE_URL}/blood-centers`);
         setCenters(response.data.centers);
         setLoading(false);
       } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 export default function Login({ onLogin }) {
   const [formData, setFormData] = useState({
@@ -33,10 +34,7 @@ export default function Login({ onLogin }) {
         return;
       }
 
-      const response = await axios.post(
-        "http://localhost:4000/auth/login",
-        formData
-      );
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, formData);
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);

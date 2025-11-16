@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 
+// Function to generate unique ticket ID
+function generateTicketId() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let ticketId = "REQ-";
+  for (let i = 0; i < 6; i++) {
+    ticketId += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return ticketId;
+}
+
 const bloodRequestSchema = new mongoose.Schema({
+  ticketId: {
+    type: String,
+    unique: true,
+    trim: true,
+  },
   requesterName: {
     type: String,
     required: true,
@@ -78,6 +93,24 @@ const bloodRequestSchema = new mongoose.Schema({
   fulfilledDate: {
     type: Date,
   },
+});
+
+// Pre-save hook to generate ticket ID
+bloodRequestSchema.pre("save", async function (next) {
+  if (!this.ticketId) {
+    let isUnique = false;
+    while (!isUnique) {
+      const ticketId = generateTicketId();
+      const existing = await mongoose
+        .model("BloodRequest")
+        .findOne({ ticketId });
+      if (!existing) {
+        this.ticketId = ticketId;
+        isUnique = true;
+      }
+    }
+  }
+  next();
 });
 
 module.exports = mongoose.model("BloodRequest", bloodRequestSchema);

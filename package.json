@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/PraneethUday/BloodBank/issues"
   },
-  "homepage": "https://github.com/PraneethUday/BloodBank#readme"
+  "homepage": "https://github.com/PraneethUday/BloodBank#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }

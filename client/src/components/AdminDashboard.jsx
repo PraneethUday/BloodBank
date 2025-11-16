@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 export default function AdminDashboard({ onLogout }) {
   const [pendingDonations, setPendingDonations] = useState([]);
@@ -36,14 +37,14 @@ export default function AdminDashboard({ onLogout }) {
       setIsLoading(true);
       const [donationsRes, requestsRes, centersRes, logsRes] =
         await Promise.all([
-          axios.get("http://localhost:4000/donation", {
+          axios.get(`${API_BASE_URL}/donation`, {
             headers: { Authorization: `Bearer admin-token` },
           }),
-          axios.get("http://localhost:4000/blood-requests", {
+          axios.get(`${API_BASE_URL}/blood-requests`, {
             headers: { Authorization: `Bearer admin-token` },
           }),
-          axios.get("http://localhost:4000/blood-centers"),
-          axios.get("http://localhost:4000/activity-logs", {
+          axios.get(`${API_BASE_URL}/blood-centers`),
+          axios.get(`${API_BASE_URL}/activity-logs`, {
             headers: { Authorization: `Bearer admin-token` },
           }),
         ]);
@@ -70,7 +71,7 @@ export default function AdminDashboard({ onLogout }) {
   const handleApproveDonation = async (donationId) => {
     try {
       await axios.put(
-        `http://localhost:4000/donation/${donationId}/status`,
+        `${API_BASE_URL}/donation/${donationId}/status`,
         { status: "approved" },
         {
           headers: { Authorization: `Bearer admin-token` },
@@ -86,7 +87,7 @@ export default function AdminDashboard({ onLogout }) {
   const handleRejectDonation = async (donationId) => {
     try {
       await axios.put(
-        `http://localhost:4000/donation/${donationId}/status`,
+        `${API_BASE_URL}/donation/${donationId}/status`,
         { status: "rejected" },
         {
           headers: { Authorization: `Bearer admin-token` },
@@ -102,7 +103,7 @@ export default function AdminDashboard({ onLogout }) {
   const handleApproveRequest = async (requestId) => {
     try {
       await axios.put(
-        `http://localhost:4000/blood-requests/${requestId}/status`,
+        `${API_BASE_URL}/blood-requests/${requestId}/status`,
         { status: "approved" },
         {
           headers: { Authorization: `Bearer admin-token` },
@@ -118,7 +119,7 @@ export default function AdminDashboard({ onLogout }) {
   const handleRejectRequest = async (requestId) => {
     try {
       await axios.put(
-        `http://localhost:4000/blood-requests/${requestId}/status`,
+        `${API_BASE_URL}/blood-requests/${requestId}/status`,
         { status: "rejected" },
         {
           headers: { Authorization: `Bearer admin-token` },
@@ -134,7 +135,7 @@ export default function AdminDashboard({ onLogout }) {
   const handleStockUpdate = async (centerId, bloodType, newUnits) => {
     try {
       await axios.put(
-        `http://localhost:4000/blood-centers/${centerId}/stock`,
+        `${API_BASE_URL}/blood-centers/${centerId}/stock`,
         { bloodType, units: newUnits },
         {
           headers: { Authorization: `Bearer admin-token` },
@@ -402,9 +403,16 @@ export default function AdminDashboard({ onLogout }) {
             ) : (
               <div className="requests-list">
                 {filteredRequests.map((request) => (
-                  <div key={request._id} className="request-item">
+                  <div
+                    key={request._id}
+                    className={`request-item urgency-${request.urgency}`}
+                  >
                     <div className="request-header">
-                      <h3>{request.patientInfo?.name || "Patient"}</h3>
+                      <h3>
+                        {request.patientInfo?.name ||
+                          request.patientName ||
+                          "Patient"}
+                      </h3>
                       <span className="status pending">Pending</span>
                     </div>
                     <div className="request-details">

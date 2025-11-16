@@ -39,6 +39,9 @@ router.post(
       const donation = new Donation(donationData);
       await donation.save();
 
+      // Populate blood center details for the response
+      await donation.populate("bloodCenter", "name location address phone");
+
       res.status(201).json({
         message: "Donation request submitted successfully",
         donation,
@@ -59,9 +62,9 @@ router.post(
 // Get user's donation history
 router.get("/history", authenticateToken, async (req, res) => {
   try {
-    const donations = await Donation.find({ email: req.user.email }).sort({
-      donationDate: -1,
-    });
+    const donations = await Donation.find({ email: req.user.email })
+      .populate("bloodCenter", "name location address phone")
+      .sort({ donationDate: -1 });
 
     res.json({ donations });
   } catch (error) {
@@ -74,6 +77,7 @@ router.get("/history", authenticateToken, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const donations = await Donation.find()
+      .populate("bloodCenter", "name location address phone")
       .sort({ donationDate: -1 })
       .limit(50);
 

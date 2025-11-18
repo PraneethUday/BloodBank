@@ -298,6 +298,352 @@ body {
   text-align: center;
 }
 
+/* Story Section */
+.story-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.story-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-content p {
+  color: #4f3130;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.story-content p:first-child {
+  font-style: italic;
+  color: #753742;
+  border-left: 4px solid #aa5042;
+  padding-left: 1rem;
+}
+
+/* Blood Types Section */
+.blood-types-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: slideUpNew 0.8s ease forwards;
+}
+
+.blood-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.blood-type-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
+  border: 2px solid #ffe6e6;
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: zoomInNew 0.6s ease forwards;
+}
+
+.blood-type-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
+}
+
+.blood-type-card h3 {
+  font-size: 2rem;
+  color: #753742;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(117, 55, 66, 0.3);
+}
+
+.blood-type-card p {
+  margin: 0.5rem 0;
+  color: #4f3130;
+  font-size: 0.9rem;
+}
+
+.percentage {
+  display: inline-block;
+  background: linear-gradient(135deg, #aa5042 0%, #753742 100%);
+  color: #d8bd8a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Benefits Section */
+.benefits-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: rotateInNew 0.8s ease forwards;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
+  border: 2px solid #ffe6e6;
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: flipInNew 0.6s ease forwards;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.benefit-card h3 {
+  color: #753742;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 4px rgba(117, 55, 66, 0.3);
+}
+
+.benefit-card p {
+  color: #4f3130;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Eligibility Section */
+.eligibility-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: slideIn 0.8s ease forwards;
+}
+
+.eligibility-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.eligibility-column {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
+  border: 2px solid #ffe6e6;
+  animation: bounceIn 0.6s ease forwards;
+}
+
+.eligibility-column h3 {
+  color: #753742;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  text-shadow: 0 2px 4px rgba(117, 55, 66, 0.3);
+  text-align: center;
+}
+
+.eligibility-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.eligibility-column li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ffebee;
+  color: #4f3130;
+  font-size: 1rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.eligibility-column li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4caf50;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.eligibility-column:nth-child(2) li:before {
+  content: "✗";
+  color: #f44336;
+}
+
+/* Safety Section */
+.safety-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: pulseNew 0.8s ease forwards;
+}
+
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.safety-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
+  border: 2px solid #ffe6e6;
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: wobbleNew 0.6s ease forwards;
+}
+
+.safety-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
+}
+
+.safety-card h3 {
+  color: #753742;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 4px rgba(117, 55, 66, 0.3);
+}
+
+.safety-card p {
+  color: #4f3130;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* FAQ Section */
+.faq-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.faq-item {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
+  border: 2px solid #ffe6e6;
+  transition: all 0.3s ease;
+  animation: slideIn 0.6s ease forwards;
+}
+
+.faq-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
+}
+
+.faq-item h3 {
+  color: #753742;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 4px rgba(117, 55, 66, 0.3);
+}
+
+.faq-item p {
+  color: #4f3130;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #753742 0%, #aa5042 100%);
+  color: #d8bd8a;
+  padding: 4rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(117, 55, 66, 0.3);
+  border: 2px solid #d8bd8a;
+  animation: glow 0.8s ease forwards;
+}
+
+.cta-section h2 {
+  margin-bottom: 1rem;
+  color: #d8bd8a;
+  font-size: 2.5rem;
+  text-shadow: 0 2px 8px rgba(216, 189, 138, 0.5);
+}
+
+.cta-section p {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  color: #d8bd8a;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mission-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: slideInRed 0.8s ease forwards;
+}
+
 .mission-statements {
   display: grid;
   gap: 1.5rem;
@@ -310,6 +656,14 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(170, 80, 66, 0.1);
   border-left: 4px solid #aa5042;
+  transition: all 0.3s ease;
+  animation: bounceInRed 0.6s ease forwards;
+}
+
+.mission-statement:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.2);
+  border-left-color: #753742;
 }
 
 .mission-statement p {
@@ -349,7 +703,13 @@ body {
 }
 
 .process-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
   margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: slideIn 0.8s ease forwards;
 }
 
 .process-steps {
@@ -366,13 +726,21 @@ body {
   box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
   text-align: center;
   border: 2px solid #ffe6e6;
+  transition: all 0.3s ease;
+  animation: pulse 0.6s ease forwards;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
 }
 
 .step-number {
   display: inline-block;
   width: 50px;
   height: 50px;
-  background: #ff5252;
+  background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   color: #ffffff;
   border-radius: 50%;
   font-size: 1.5rem;
@@ -380,10 +748,22 @@ body {
   line-height: 50px;
   margin-bottom: 1rem;
   box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+  transition: all 0.3s ease;
+}
+
+.step:hover .step-number {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 82, 82, 0.6);
 }
 
 .team-section {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 3rem 2rem;
+  border-radius: 16px;
   margin-bottom: 3rem;
+  box-shadow: 0 8px 25px rgba(170, 80, 66, 0.15);
+  border: 2px solid #ffebee;
+  animation: rotateInNew 0.8s ease forwards;
 }
 
 .team-grid {
@@ -400,6 +780,14 @@ body {
   box-shadow: 0 6px 20px rgba(211, 47, 47, 0.1);
   text-align: center;
   border: 2px solid #ffe6e6;
+  transition: all 0.3s ease;
+  animation: flipInNew 0.6s ease forwards;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(211, 47, 47, 0.2);
+  border-color: #aa5042;
 }
 
 .team-member img {
@@ -408,6 +796,13 @@ body {
   border-radius: 50%;
   margin-bottom: 1rem;
   object-fit: cover;
+  border: 3px solid #ffe6e6;
+  transition: all 0.3s ease;
+}
+
+.team-member:hover img {
+  border-color: #aa5042;
+  transform: scale(1.05);
 }
 
 /* Donation Form Styles */

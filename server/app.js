@@ -16,16 +16,7 @@ const PORT = process.env.PORT || 3002;
 
 // Connect to MongoDB
 mongoose
-  .connect(
-    "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank?retryWrites=true&w=majority",
-    {
-      ssl: true,
-      tlsAllowInvalidCertificates: true,
-      tlsAllowInvalidHostnames: true,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-    }
-  )
+  .connect("mongodb://localhost:27017/bloodbank")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

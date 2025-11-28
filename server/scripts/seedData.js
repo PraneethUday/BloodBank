@@ -2,8 +2,30 @@ const mongoose = require("mongoose");
 const Donation = require("../models/Donation");
 const BloodRequest = require("../models/BloodRequest");
 const BloodCenter = require("../models/BloodCenter");
+const User = require("../models/User");
 
 // Sample data for seeding
+const sampleUsers = [
+  {
+    name: "Praneeth Udayakumar",
+    email: "praneethp227@gmail.com",
+    password: "123456",
+    phone: "555-0123",
+    bloodType: "O+",
+    age: 25,
+    address: "123 Test St, City, State 12345",
+  },
+  {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    password: "password123",
+    phone: "555-0124",
+    bloodType: "A+",
+    age: 30,
+    address: "456 Sample Ave, City, State 12345",
+  },
+];
+
 const sampleDonations = [
   {
     donorName: "John Smith",
@@ -489,24 +511,22 @@ async function seedDatabase() {
   try {
     // Connect to MongoDB
     await mongoose.connect(
-      "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank?retryWrites=true&w=majority",
-      {
-        ssl: true,
-        tlsAllowInvalidCertificates: true,
-        tlsAllowInvalidHostnames: true,
-        serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
-      }
+      "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank"
     );
 
     console.log("Connected to MongoDB");
 
     // Clear existing data
+    await User.deleteMany({});
     await Donation.deleteMany({});
     await BloodRequest.deleteMany({});
     await BloodCenter.deleteMany({});
 
     console.log("Cleared existing data");
+
+    // Create users
+    const users = await User.insertMany(sampleUsers);
+    console.log(`Created ${users.length} users`);
 
     // Create blood centers first (needed for donations)
     const centers = await BloodCenter.insertMany(sampleBloodCenters);
@@ -533,6 +553,7 @@ async function seedDatabase() {
     console.log(`Created ${requests.length} blood requests`);
 
     console.log("Database seeded successfully!");
+    console.log(`- ${users.length} users`);
     console.log(`- ${donations.length} donations`);
     console.log(`- ${requests.length} blood requests`);
     console.log(`- ${centers.length} blood centers`);

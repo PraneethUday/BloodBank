@@ -688,14 +688,25 @@ export default function AdminDashboard({ onLogout }) {
         {showPasswordModal && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <h2>Admin Authentication</h2>
-              <p>Enter admin password to edit blood stock:</p>
+              <button
+                className="modal-close"
+                onClick={() => {
+                  setShowPasswordModal(false);
+                  setPassword("");
+                  setPasswordError("");
+                }}
+              >
+                ✕
+              </button>
+              <h2>🔐 Admin Authentication</h2>
+              <p>Enter admin password to edit blood storage capacity:</p>
               <form onSubmit={handlePasswordSubmit}>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
+                  autoFocus
                   required
                 />
                 {passwordError && <div className="error">{passwordError}</div>}
@@ -724,8 +735,14 @@ export default function AdminDashboard({ onLogout }) {
         {showSummaryModal && (
           <div className="modal-overlay">
             <div className="modal-content summary-modal">
-              <h2>Confirm Changes</h2>
-              <p>Review the changes before saving:</p>
+              <button
+                className="modal-close"
+                onClick={() => setShowSummaryModal(false)}
+              >
+                ✕
+              </button>
+              <h2>✓ Confirm Changes</h2>
+              <p>Review the changes before saving to blood storage:</p>
               <div className="changes-summary">
                 {Object.values(changes).map((change, index) => {
                   const center = bloodCenters.find(

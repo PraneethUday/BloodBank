@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const Donation = require("../models/Donation");
 const BloodRequest = require("../models/BloodRequest");
 const BloodCenter = require("../models/BloodCenter");
@@ -28,6 +29,7 @@ const sampleUsers = [
 
 const sampleDonations = [
   {
+    ticketId: "DON-SEED-001",
     donorName: "John Smith",
     email: "john.smith@email.com",
     phone: "555-0101",
@@ -45,6 +47,7 @@ const sampleDonations = [
     status: "pending",
   },
   {
+    ticketId: "DON-SEED-002",
     donorName: "Sarah Johnson",
     email: "sarah.johnson@email.com",
     phone: "555-0103",
@@ -62,6 +65,7 @@ const sampleDonations = [
     status: "pending",
   },
   {
+    ticketId: "DON-SEED-003",
     donorName: "David Brown",
     email: "david.brown@email.com",
     phone: "555-0105",
@@ -79,6 +83,7 @@ const sampleDonations = [
     status: "approved",
   },
   {
+    ticketId: "DON-SEED-004",
     donorName: "Emily Davis",
     email: "emily.davis@email.com",
     phone: "555-0107",
@@ -96,6 +101,7 @@ const sampleDonations = [
     status: "completed",
   },
   {
+    ticketId: "DON-SEED-005",
     donorName: "Michael Wilson",
     email: "michael.wilson@email.com",
     phone: "555-0109",
@@ -116,6 +122,7 @@ const sampleDonations = [
 
 const sampleBloodRequests = [
   {
+    ticketId: "REQ-SEED-001",
     requesterName: "Dr. Robert Martinez",
     requesterEmail: "robert.martinez@hospital.com",
     requesterPhone: "555-0201",
@@ -131,6 +138,7 @@ const sampleBloodRequests = [
     status: "pending",
   },
   {
+    ticketId: "REQ-SEED-002",
     requesterName: "Dr. Jennifer Lee",
     requesterEmail: "jennifer.lee@hospital.com",
     requesterPhone: "555-0202",
@@ -146,6 +154,7 @@ const sampleBloodRequests = [
     status: "approved",
   },
   {
+    ticketId: "REQ-SEED-003",
     requesterName: "Dr. William Chen",
     requesterEmail: "william.chen@hospital.com",
     requesterPhone: "555-0203",
@@ -161,6 +170,7 @@ const sampleBloodRequests = [
     status: "pending",
   },
   {
+    ticketId: "REQ-SEED-004",
     requesterName: "Dr. Amanda Taylor",
     requesterEmail: "amanda.taylor@hospital.com",
     requesterPhone: "555-0204",
@@ -176,6 +186,7 @@ const sampleBloodRequests = [
     status: "fulfilled",
   },
   {
+    ticketId: "REQ-SEED-005",
     requesterName: "Dr. Christopher Brown",
     requesterEmail: "christopher.brown@hospital.com",
     requesterPhone: "555-0205",
@@ -511,7 +522,7 @@ async function seedDatabase() {
   try {
     // Connect to MongoDB
     await mongoose.connect(
-      "mongodb+srv://praneethp227:12345@cluster0.fkhlcjn.mongodb.net/bloodbank"
+      "mongodb+srv://praneethp227:root%40123@cluster0.dt3juch.mongodb.net/bloodbank"
     );
 
     console.log("Connected to MongoDB");
@@ -525,7 +536,15 @@ async function seedDatabase() {
     console.log("Cleared existing data");
 
     // Create users
-    const users = await User.insertMany(sampleUsers);
+    // Hash passwords since insertMany bypasses pre-save hooks
+    const usersWithHashedPasswords = await Promise.all(
+      sampleUsers.map(async (user) => ({
+        ...user,
+        password: await bcrypt.hash(user.password, 10),
+      }))
+    );
+
+    const users = await User.insertMany(usersWithHashedPasswords);
     console.log(`Created ${users.length} users`);
 
     // Create blood centers first (needed for donations)

@@ -14,9 +14,13 @@ const activityLogRoutes = require("./routes/activityLogs");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Connect to MongoDB
+// MongoDB connection
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://praneethp227:root%40123@cluster0.dt3juch.mongodb.net/bloodbank";
+
 mongoose
-  .connect("mongodb://localhost:27017/bloodbank")
+  .connect(MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

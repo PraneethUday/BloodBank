@@ -56,3 +56,65 @@ The BloodBank application is a comprehensive blood donation and request manageme
 - **Styling**: Custom CSS with animations
 
 The application ensures a smooth experience for both donors and those in need of blood, with robust tracking and management capabilities for administrators.
+
+## Deployment
+
+### Quick Deploy to Render
+
+1. **Push to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. **Deploy via Render Blueprint**:
+   - Go to [Render Dashboard](https://dashboard.render.com/)
+   - Click "New" → "Blueprint"
+   - Connect your GitHub repository
+   - Render will detect `render.yaml` and deploy both services
+
+3. **Configure Environment Variables**:
+   - Backend: Set `MONGODB_URI`, `JWT_SECRET`, `NODE_ENV`, `PORT`
+   - Frontend: Set `VITE_API_URL` to your backend URL
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+## Local Development
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   cd server && npm install
+   cd ../client && npm install
+   ```
+
+2. **Set up environment variables**:
+   ```bash
+   # Server
+   cp server/.env.example server/.env
+   # Edit server/.env with your MongoDB URI and JWT secret
+
+   # Client
+   cp client/.env.example client/.env
+   # Edit client/.env with your API URL (default: http://localhost:3002)
+   ```
+
+3. **Seed database** (optional):
+   ```bash
+   cd server
+   node scripts/seedData.js
+   ```
+
+4. **Run the application**:
+   ```bash
+   npm start
+   ```
+   - Backend: http://localhost:3002
+   - Frontend: http://localhost:5173
+
+## Default Credentials
+
+After seeding the database:
+- **User**: praneethp227@gmail.com / 123456
+- **Admin**: admin / admin

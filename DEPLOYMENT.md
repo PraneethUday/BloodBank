@@ -3,12 +3,14 @@
 ## Render Deployment
 
 This application is configured for deployment on Render with two services:
+
 - **Backend API** (Node.js)
 - **Frontend** (Static Site)
 
 ### Quick Deploy
 
 1. **Push to GitHub**
+
    ```bash
    git add .
    git commit -m "Ready for Render deployment"
@@ -24,7 +26,9 @@ This application is configured for deployment on Render with two services:
 ### Environment Variables
 
 #### Backend (bloodbank-api)
+
 Set these in Render dashboard:
+
 - `MONGODB_URI`: Your MongoDB Atlas connection string
   ```
   mongodb+srv://praneethp227:root%40123@cluster0.dt3juch.mongodb.net/bloodbank
@@ -34,6 +38,7 @@ Set these in Render dashboard:
 - `PORT`: `3002`
 
 #### Frontend (bloodbank-client)
+
 - `VITE_API_URL`: Your backend URL (e.g., `https://bloodbank-api.onrender.com`)
 
 ### Manual Deployment Steps
@@ -41,6 +46,7 @@ Set these in Render dashboard:
 If not using Blueprint (render.yaml):
 
 #### 1. Deploy Backend
+
 1. New Web Service
 2. Connect repository
 3. Settings:
@@ -50,6 +56,7 @@ If not using Blueprint (render.yaml):
    - Add environment variables above
 
 #### 2. Deploy Frontend
+
 1. New Static Site
 2. Connect repository
 3. Settings:
@@ -60,6 +67,7 @@ If not using Blueprint (render.yaml):
 ### Post-Deployment
 
 1. **Seed Database** (if needed):
+
    ```bash
    # SSH into backend service or run locally pointing to production DB
    node server/scripts/seedData.js
@@ -72,6 +80,7 @@ If not using Blueprint (render.yaml):
 ### Local Development
 
 1. **Server**:
+
    ```bash
    cd server
    cp .env.example .env
@@ -81,6 +90,7 @@ If not using Blueprint (render.yaml):
    ```
 
 2. **Client**:
+
    ```bash
    cd client
    cp .env.example .env

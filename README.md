@@ -62,6 +62,7 @@ The application ensures a smooth experience for both donors and those in need of
 ### Quick Deploy to Render
 
 1. **Push to GitHub**:
+
    ```bash
    git add .
    git commit -m "Ready for deployment"
@@ -69,6 +70,7 @@ The application ensures a smooth experience for both donors and those in need of
    ```
 
 2. **Deploy via Render Blueprint**:
+
    - Go to [Render Dashboard](https://dashboard.render.com/)
    - Click "New" → "Blueprint"
    - Connect your GitHub repository
@@ -83,6 +85,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 ## Local Development
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    cd server && npm install
@@ -90,6 +93,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    # Server
    cp server/.env.example server/.env
@@ -101,6 +105,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
    ```
 
 3. **Seed database** (optional):
+
    ```bash
    cd server
    node scripts/seedData.js
@@ -116,5 +121,6 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 ## Default Credentials
 
 After seeding the database:
+
 - **User**: praneethp227@gmail.com / 123456
 - **Admin**: admin / admin
